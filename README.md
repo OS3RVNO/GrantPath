@@ -2,19 +2,20 @@
 
 > Who has access. Why it exists. What changes if you remove it.
 
-GrantPath is a graph-powered, self-hosted access intelligence project for IAM, Active Directory, file servers and ACLs. It turns permissions into explainable answers, actionable access reviews and safe removal simulations.
+GrantPath is a graph-powered, self-hosted **Access Path Intelligence Platform** for IAM, Active Directory and file server permissions. It shows who has access, explains why that access exists through groups, ACLs and inheritance, and helps teams simulate changes before they break production.
 
 ## About
 
 GrantPath is an explainable, graph-powered control plane for access analysis, entitlement visibility and permission cleanup.
 
-- it shows who has access to a resource
-- it explains why that access exists across identities, groups, ACLs and inheritance
+- it shows who can reach a resource or permission boundary
+- it explains why that access exists across identities, nested groups, ACLs and inheritance
 - it helps teams understand what changes if a grant, path or group is removed
+- it turns review and cleanup work into something operators can act on quickly
 
 It is built for self-hosted environments where access visibility, operational reporting and explainability matter more than static audit exports.
 
-GrantPath is a self-hosted **Access Path Intelligence Platform** for teams that need to answer:
+GrantPath is built for teams that need to answer:
 
 - who has access
 - why that access exists
@@ -36,9 +37,9 @@ Core product goals:
 
 ## Project Status
 
-GrantPath is still under active implementation and should be treated as an early-stage platform, not as a finished enterprise suite.
+GrantPath is still an early public preview, not a finished enterprise suite. The core flows are already real and useful, but broader enterprise depth is still being built out.
 
-What already feels solid:
+Where it already feels strong:
 
 - local admin bootstrap with MFA
 - `LDAP` and `OIDC` integration paths
@@ -54,7 +55,7 @@ What already feels solid:
 - RBAC inside the application
 - Docker, Windows package, Linux installer
 
-What is still partial:
+What is still evolving:
 
 - full cloud/runtime validation for `Graph`, `Azure`, `Okta`, `AWS`, `Google`, `CyberArk`
 - deeper multi-tenant isolation

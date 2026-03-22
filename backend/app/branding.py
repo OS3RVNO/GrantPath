@@ -4,8 +4,8 @@ PRODUCT_NAME = "GrantPath"
 PRODUCT_CATEGORY = "Access Path Intelligence Platform"
 PRODUCT_TAGLINE = "Who has access. Why it exists. What changes if you remove it."
 PRODUCT_SHORT_DESCRIPTION = (
-    "Graph-powered access intelligence for IAM, Active Directory, file servers and ACLs. "
-    "Explain access, review exposure and simulate changes before they break production."
+    "Graph-powered access intelligence for IAM, Active Directory and file server permissions. "
+    "Explain who has access, why it exists and what changes before you remove it."
 )
 PRODUCT_API_TITLE = f"{PRODUCT_NAME} API"
 PRODUCT_DEFAULT_TENANT_NAME = PRODUCT_NAME

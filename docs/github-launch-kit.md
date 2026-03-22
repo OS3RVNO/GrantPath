@@ -14,21 +14,21 @@ Who has access. Why it exists. What changes if you remove it.
 
 ## Short Description
 
-GrantPath is a graph-powered, self-hosted access intelligence platform for IAM, Active Directory, file servers and ACLs. It explains permissions, supports access reviews and simulates safe removals.
+GrantPath is a graph-powered, self-hosted access intelligence platform for IAM, Active Directory and file server permissions. It explains who has access, why it exists and what changes before you remove it.
 
 ## GitHub Repository Description
 
-Graph-powered access intelligence for IAM, Active Directory and file server permissions. Explain access, review exposure and simulate changes before they break production.
+Graph-powered access intelligence for IAM, Active Directory and file server permissions. Explain who has access, why it exists and what changes before you remove it.
 
 ## About Panel Copy
 
 ### Description
 
-Graph-powered access intelligence for IAM, Active Directory and file server permissions. Explain access, review exposure and simulate changes before they break production.
+Graph-powered access intelligence for IAM, Active Directory and file server permissions. Explain who has access, why it exists and what changes before you remove it.
 
 ### Short About
 
-GrantPath turns identities, groups, ACLs and inheritance into fast, explainable answers for access reviews, permission cleanup and security investigations.
+Early public preview. Already strong on explainability, access reviews and file permission investigations, with broader enterprise depth still in progress.
 
 ### Suggested Website
 
@@ -36,7 +36,7 @@ Leave empty until there is a stable docs or product site.
 
 ## One-Sentence Pitch
 
-GrantPath turns IAM identities, Active Directory groups, ACLs and inheritance into fast, explainable answers for access reviews, permission cleanup and operational investigations.
+GrantPath turns identities, groups, ACLs and inheritance into fast, explainable answers for access reviews, permission cleanup and operational investigations.
 
 ## Recommended Topics
 
