@@ -1,0 +1,34 @@
+<svg width="1280" height="640" viewBox="0 0 1280 640" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1280" y2="640" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F3EFE6"/>
+      <stop offset="0.52" stop-color="#F8F4ED"/>
+      <stop offset="1" stop-color="#E5F1EE"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="125" y1="90" x2="1085" y2="550" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1F3B37"/>
+      <stop offset="1" stop-color="#315C55"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="640" rx="32" fill="url(#bg)"/>
+  <rect x="72" y="72" width="1136" height="496" rx="28" fill="#FFFCF7" stroke="#D8DDD8"/>
+  <rect x="125" y="90" width="430" height="40" rx="20" fill="#EFF4EF" stroke="#CAD4CD"/>
+  <text x="149" y="116" fill="#5A6C66" font-family="Segoe UI, Arial, sans-serif" font-size="18" letter-spacing="2">ACCESS PATH INTELLIGENCE</text>
+  <text x="125" y="210" fill="#102220" font-family="Segoe UI, Arial, sans-serif" font-size="72" font-weight="700">GrantPath</text>
+  <text x="125" y="270" fill="#48615A" font-family="Segoe UI, Arial, sans-serif" font-size="28">Who has access. Why it exists.</text>
+  <text x="125" y="308" fill="#48615A" font-family="Segoe UI, Arial, sans-serif" font-size="28">What changes before you remove it.</text>
+  <text x="125" y="382" fill="#2A3D38" font-family="Segoe UI, Arial, sans-serif" font-size="22">Graph-powered access intelligence for IAM, Active Directory</text>
+  <text x="125" y="416" fill="#2A3D38" font-family="Segoe UI, Arial, sans-serif" font-size="22">and file server permissions.</text>
+  <rect x="125" y="462" width="246" height="54" rx="27" fill="#DCEEE8" stroke="#B8D1C8"/>
+  <text x="152" y="496" fill="#15342F" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="600">Explainable paths</text>
+  <rect x="388" y="462" width="228" height="54" rx="27" fill="#F3EBDD" stroke="#DBCDB6"/>
+  <text x="416" y="496" fill="#4D3A1C" font-family="Segoe UI, Arial, sans-serif" font-size="22" font-weight="600">Access reviews</text>
+  <rect x="735" y="128" width="390" height="384" rx="28" fill="url(#accent)"/>
+  <text x="780" y="185" fill="#FCF8F1" font-family="Segoe UI, Arial, sans-serif" font-size="24" font-weight="700">Questions GrantPath answers</text>
+  <rect x="780" y="214" width="306" height="1" fill="#5C847C"/>
+  <text x="780" y="268" fill="#F7EEE0" font-family="Segoe UI, Arial, sans-serif" font-size="24">1. Who can reach Finance?</text>
+  <text x="780" y="324" fill="#F7EEE0" font-family="Segoe UI, Arial, sans-serif" font-size="24">2. Why does this path exist?</text>
+  <text x="780" y="380" fill="#F7EEE0" font-family="Segoe UI, Arial, sans-serif" font-size="24">3. What breaks if we remove it?</text>
+  <rect x="780" y="432" width="223" height="46" rx="23" fill="#F4F0E6"/>
+  <text x="809" y="462" fill="#1D342F" font-family="Segoe UI, Arial, sans-serif" font-size="20" font-weight="600">Early public preview</text>
+</svg>

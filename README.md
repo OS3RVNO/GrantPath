@@ -5,6 +5,19 @@
 [![License](https://img.shields.io/github/license/OS3RVNO/GrantPath)](./LICENSE)
 ![Status](https://img.shields.io/badge/status-early%20preview-EA580C)
 
+<p align="center">
+  <img src="./docs/assets/grantpath-hero.svg" alt="GrantPath hero banner" width="100%" />
+</p>
+
+<p align="center">
+  <a href="#why-grantpath">Why</a> |
+  <a href="#questions-grantpath-can-answer">Questions It Answers</a> |
+  <a href="#why-its-different">Why It Is Different</a> |
+  <a href="#quick-start">Quick Start</a> |
+  <a href="./docs/support-matrix.md">Support Matrix</a> |
+  <a href="./INSTALL.md">Install</a>
+</p>
+
 > Who has access. Why it exists. What changes if you remove it.
 
 GrantPath is a graph-powered, self-hosted **Access Path Intelligence Platform** for IAM, Active Directory and file server permissions. It shows who has access, explains why that access exists through groups, ACLs and inheritance, and helps teams simulate changes before they break production.
@@ -24,6 +37,27 @@ GrantPath turns that mess into something operational:
 - `what changes if you remove it`: run safe what-if simulations before touching production
 - `review and report`: generate access reviews, remediation plans and scheduled reports
 - `self-hosted`: run it in Docker, Windows or Linux without paid platform dependencies
+
+## Questions GrantPath Can Answer
+
+These are the kinds of questions that make GrantPath interesting in practice:
+
+- Why does `mario.rossi` still have write access to Finance?
+- Which groups and ACLs make this share reachable?
+- Who loses access if we remove this nested group or ACE?
+- Which resources are overexposed right now?
+- Which review decisions can we export for audit or remediation?
+
+## Why It's Different
+
+| Static ACL auditor | GrantPath |
+|---|---|
+| dumps permissions | explains effective access |
+| shows raw ACLs | reconstructs why access exists |
+| weak at nested group reasoning | follows paths across groups, ACLs and inheritance |
+| risky cleanup decisions | supports what-if simulations before changes |
+| report-first | operator-first and investigation-friendly |
+| often cloud-only or product-led | self-hosted and usable on local infrastructure |
 
 ## What Feels Strong Today
 
@@ -93,6 +127,7 @@ Core documentation:
 - [Support Matrix](./docs/support-matrix.md)
 - [Official Integration Notes](./docs/official-integration-notes.md)
 - [Enterprise Readiness Review](./docs/enterprise-readiness-review.md)
+- [GitHub Launch Kit](./docs/github-launch-kit.md)
 
 ## Architecture
 

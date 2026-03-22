@@ -1,1 +1,11 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Install Guide
+    url: https://github.com/OS3RVNO/GrantPath/blob/main/INSTALL.md
+    about: Start here if you want to install or run GrantPath locally.
+  - name: Support Matrix
+    url: https://github.com/OS3RVNO/GrantPath/blob/main/docs/support-matrix.md
+    about: Check what is supported, partial or still in blueprint status.
+  - name: Security Policy
+    url: https://github.com/OS3RVNO/GrantPath/blob/main/SECURITY.md
+    about: Use this if you need to report a security issue responsibly.

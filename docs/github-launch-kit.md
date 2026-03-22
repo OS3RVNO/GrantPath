@@ -34,6 +34,11 @@ Early public preview. Already strong on explainability, access reviews and file 
 
 GrantPath is a graph-powered, self-hosted Access Path Intelligence Platform for IAM, Active Directory and file server permissions. It shows who has access, explains why that access exists through groups, ACLs and inheritance, and helps teams simulate changes before they break production.
 
+## Suggested Visuals
+
+- README hero banner: [docs/assets/grantpath-hero.svg](../docs/assets/grantpath-hero.svg)
+- GitHub social preview: reuse the hero copy until a dedicated preview image exists
+
 ### Suggested Website
 
 Leave empty until there is a stable docs or product site.
