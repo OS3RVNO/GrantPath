@@ -62,30 +62,40 @@ def _seed_demo_runtime_snapshot() -> None:
     runtime._refresh_enterprise_indexes(snapshot)
 
 
-def _ensure_materialized_indexes() -> int:
+def _sync_engine_to_latest_snapshot():
     snapshot = runtime.storage.load_latest_snapshot()
+    if snapshot is None:
+        return None
+    if runtime.engine.snapshot.generated_at != snapshot.generated_at:
+        runtime.engine = AccessGraphEngine(snapshot)
+    return snapshot
+
+
+def _ensure_materialized_indexes() -> int:
+    snapshot = _sync_engine_to_latest_snapshot()
     if snapshot is None:
         return 0
     stats = runtime.storage.materialized_access_index_stats(snapshot.generated_at)
     if stats["row_count"] >= 1:
         return int(stats["row_count"])
 
-    rows = runtime.engine.materialized_access_index()
+    engine = runtime.engine
+    rows = engine.materialized_access_index()
     if rows:
         runtime.storage.save_materialized_access_index(snapshot.generated_at, rows)
         runtime.storage.save_resource_exposure_index(
             snapshot.generated_at,
-            runtime.engine.resource_exposure_index_from_rows(rows),
+            engine.resource_exposure_index_from_rows(rows),
         )
         runtime.storage.save_principal_access_summary(
             snapshot.generated_at,
-            runtime.engine.principal_access_summary_index_from_rows(rows),
+            engine.principal_access_summary_index_from_rows(rows),
         )
     return len(rows)
 
 
 def _context_matches_runtime(context: dict[str, str]) -> bool:
-    snapshot = runtime.storage.load_latest_snapshot()
+    snapshot = _sync_engine_to_latest_snapshot()
     if snapshot is None:
         return False
     entity_ids = {entity.id for entity in snapshot.entities}
