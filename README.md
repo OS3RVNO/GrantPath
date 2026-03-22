@@ -1,10 +1,31 @@
 # GrantPath
 
+[![CI](https://github.com/OS3RVNO/GrantPath/actions/workflows/ci.yml/badge.svg)](https://github.com/OS3RVNO/GrantPath/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/OS3RVNO/GrantPath?display_name=tag)](https://github.com/OS3RVNO/GrantPath/releases)
+[![License](https://img.shields.io/github/license/OS3RVNO/GrantPath)](./LICENSE)
+![Status](https://img.shields.io/badge/status-early%20preview-EA580C)
+
 > Who has access. Why it exists. What changes if you remove it.
 
 GrantPath is a graph-powered, self-hosted **Access Path Intelligence Platform** for IAM, Active Directory and file server permissions. It shows who has access, explains why that access exists through groups, ACLs and inheritance, and helps teams simulate changes before they break production.
 
-## About
+## Why GrantPath
+
+GrantPath is built for a problem teams hit constantly:
+
+- access is inherited through layers of groups, ACLs and exceptions
+- static permission reports do not explain why an access path exists
+- cleanup work is risky when nobody knows what will break
+
+GrantPath turns that mess into something operational:
+
+- `who has access`: find effective access across principals, groups, resources and inheritance
+- `why it exists`: inspect explainable paths instead of guessing from raw ACLs
+- `what changes if you remove it`: run safe what-if simulations before touching production
+- `review and report`: generate access reviews, remediation plans and scheduled reports
+- `self-hosted`: run it in Docker, Windows or Linux without paid platform dependencies
+
+## What Feels Strong Today
 
 GrantPath is an explainable, graph-powered control plane for access analysis, entitlement visibility and permission cleanup.
 
@@ -22,18 +43,6 @@ GrantPath is built for teams that need to answer:
 - what changes if a grant, group or ACL path is removed
 
 It is built as an explainable control plane, not as a static ACL auditor.
-
-## Why It Matters
-
-GrantPath models real access relationships across identities, groups, ACLs, inheritance and effective permissions, then turns them into operational answers that admins and security teams can actually use.
-
-Core product goals:
-
-- deterministic entitlement reasoning
-- fast materialized access queries
-- explainable access paths
-- operator-grade reporting and access reviews
-- self-hosted deployment without paid dependencies
 
 ## Project Status
 
@@ -60,6 +69,30 @@ What is still evolving:
 - full cloud/runtime validation for `Graph`, `Azure`, `Okta`, `AWS`, `Google`, `CyberArk`
 - deeper multi-tenant isolation
 - broader enterprise governance and analytics
+
+If you discover GrantPath through GitHub search, the right expectation is:
+
+- already useful for `filesystem + explainability + access review + reporting`
+- still maturing for deeper enterprise breadth and broader connector coverage
+
+## Quick Start
+
+Start here:
+
+- [INSTALL.md](./INSTALL.md)
+
+Recommended install paths:
+
+1. Docker appliance
+2. Windows release package
+3. Linux system install
+
+Core documentation:
+
+- [Install Guide](./INSTALL.md)
+- [Support Matrix](./docs/support-matrix.md)
+- [Official Integration Notes](./docs/official-integration-notes.md)
+- [Enterprise Readiness Review](./docs/enterprise-readiness-review.md)
 
 ## Architecture
 
@@ -104,18 +137,6 @@ Current stack in the repository:
 Important compatibility note:
 
 - internal configuration prefixes still use `EIP_*` for backward compatibility
-
-## Install
-
-Start here:
-
-- [INSTALL.md](./INSTALL.md)
-
-Recommended install paths for end users:
-
-1. Docker appliance
-2. Windows release package
-3. Linux system install
 
 ## Quick Start From Source
 
@@ -172,13 +193,6 @@ Key files:
 - [scripts/install-from-source.ps1](./scripts/install-from-source.ps1)
 - [scripts/install-from-source.sh](./scripts/install-from-source.sh)
 
-## Documentation
-
-- [Install Guide](./INSTALL.md)
-- [Support Matrix](./docs/support-matrix.md)
-- [Official Integration Notes](./docs/official-integration-notes.md)
-- [Enterprise Readiness Review](./docs/enterprise-readiness-review.md)
-
 ## Repository Layout
 
 - [backend](./backend)
@@ -196,25 +210,6 @@ At a high level:
 - `blueprint`: some cloud connectors modeled from official documentation but not fully live in this runtime
 
 See the full matrix in [docs/support-matrix.md](./docs/support-matrix.md).
-
-## Publishing Notes
-
-GrantPath is publishable as an open-source project today if positioned honestly:
-
-- not as a finished enterprise suite
-- but as a serious, self-hosted access intelligence platform with a strong architecture and working end-to-end flows
-
-Recommended positioning:
-
-- `Access Path Intelligence Platform`
-- `early-stage and under active implementation`
-- `self-hosted, explainable, operator-first`
-
-Public launch assets:
-
-- [GitHub Launch Kit](./docs/github-launch-kit.md)
-- [Release v0.1.0 Notes](./RELEASE_v0.1.0.md)
-- [License Decision](./docs/license-decision.md)
 
 ## Security
 

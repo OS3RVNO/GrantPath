@@ -30,6 +30,10 @@ Graph-powered access intelligence for IAM, Active Directory and file server perm
 
 Early public preview. Already strong on explainability, access reviews and file permission investigations, with broader enterprise depth still in progress.
 
+## Suggested README Hero
+
+GrantPath is a graph-powered, self-hosted Access Path Intelligence Platform for IAM, Active Directory and file server permissions. It shows who has access, explains why that access exists through groups, ACLs and inheritance, and helps teams simulate changes before they break production.
+
 ### Suggested Website
 
 Leave empty until there is a stable docs or product site.
