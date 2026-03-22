@@ -62,11 +62,49 @@ def _seed_demo_runtime_snapshot() -> None:
     runtime._refresh_enterprise_indexes(snapshot)
 
 
+def _ensure_materialized_indexes() -> int:
+    snapshot = runtime.storage.load_latest_snapshot()
+    if snapshot is None:
+        return 0
+    stats = runtime.storage.materialized_access_index_stats(snapshot.generated_at)
+    if stats["row_count"] >= 1:
+        return int(stats["row_count"])
+
+    rows = runtime.engine.materialized_access_index()
+    if rows:
+        runtime.storage.save_materialized_access_index(snapshot.generated_at, rows)
+        runtime.storage.save_resource_exposure_index(
+            snapshot.generated_at,
+            runtime.engine.resource_exposure_index_from_rows(rows),
+        )
+        runtime.storage.save_principal_access_summary(
+            snapshot.generated_at,
+            runtime.engine.principal_access_summary_index_from_rows(rows),
+        )
+    return len(rows)
+
+
+def _context_matches_runtime(context: dict[str, str]) -> bool:
+    snapshot = runtime.storage.load_latest_snapshot()
+    if snapshot is None:
+        return False
+    entity_ids = {entity.id for entity in snapshot.entities}
+    relationship_ids = {relationship.id for relationship in snapshot.relationships}
+    if context.get("principal_id") not in entity_ids:
+        return False
+    if context.get("resource_id") not in entity_ids:
+        return False
+    if context.get("scenario_edge_id") not in relationship_ids:
+        return False
+    return _ensure_materialized_indexes() >= 1
+
+
 def _live_context() -> dict[str, str]:
     global _CONTEXT
-    if _CONTEXT is not None:
+    if _CONTEXT is not None and _context_matches_runtime(_CONTEXT):
         return _CONTEXT
 
+    _CONTEXT = None
     _login()
     scan_response = client.post("/api/scans/run", headers=_headers())
     assert scan_response.status_code == 200
@@ -100,7 +138,16 @@ def _live_context() -> dict[str, str]:
         )
         scenario_edge_id = None if removable_relationship is None else removable_relationship.id
 
-    if not principal_id or not resource_id or not scenario_edge_id:
+    row_count = _ensure_materialized_indexes()
+    if row_count >= 1:
+        first_row = runtime.storage.list_materialized_access_index(
+            runtime.engine.snapshot.generated_at,
+            limit=1,
+        )[0]
+        principal_id = str(first_row["principal_id"])
+        resource_id = str(first_row["resource_id"])
+
+    if not principal_id or not resource_id or not scenario_edge_id or row_count < 1:
         _seed_demo_runtime_snapshot()
         overview_response = client.get("/api/overview")
         assert overview_response.status_code == 200
@@ -108,8 +155,13 @@ def _live_context() -> dict[str, str]:
         catalog_response = client.get("/api/catalog")
         assert catalog_response.status_code == 200
         catalog = catalog_response.json()
-        principal_id = overview.get("default_principal_id") or catalog["principals"][0]["id"]
-        resource_id = overview.get("default_resource_id") or catalog["resources"][0]["id"]
+        _ensure_materialized_indexes()
+        first_row = runtime.storage.list_materialized_access_index(
+            runtime.engine.snapshot.generated_at,
+            limit=1,
+        )[0]
+        principal_id = str(first_row["principal_id"])
+        resource_id = str(first_row["resource_id"])
         scenario_edge_id = overview.get("default_scenario_edge_id") or catalog["scenarios"][0]["edge_id"]
 
     assert principal_id
