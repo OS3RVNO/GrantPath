@@ -11,6 +11,8 @@ os.environ.setdefault("EIP_DATA_DIR", str(Path(__file__).resolve().parents[1] / 
 
 from app.connector_blueprints import build_connector_blueprints
 from app.auth import create_password_record
+from app.demo_data import build_demo_snapshot
+from app.engine import AccessGraphEngine
 from app.integration_collectors import _parse_graph_site_ids, _validation_errors_for_connector
 from app.main import app, runtime
 from app.models import Entity, Relationship
@@ -53,6 +55,13 @@ def _headers() -> dict[str, str]:
     return dict(_AUTH_HEADERS)
 
 
+def _seed_demo_runtime_snapshot() -> None:
+    snapshot = build_demo_snapshot()
+    runtime.storage.save_snapshot(snapshot)
+    runtime.engine = AccessGraphEngine(snapshot)
+    runtime._refresh_enterprise_indexes(snapshot)
+
+
 def _live_context() -> dict[str, str]:
     global _CONTEXT
     if _CONTEXT is not None:
@@ -90,6 +99,18 @@ def _live_context() -> dict[str, str]:
             None,
         )
         scenario_edge_id = None if removable_relationship is None else removable_relationship.id
+
+    if not principal_id or not resource_id or not scenario_edge_id:
+        _seed_demo_runtime_snapshot()
+        overview_response = client.get("/api/overview")
+        assert overview_response.status_code == 200
+        overview = overview_response.json()
+        catalog_response = client.get("/api/catalog")
+        assert catalog_response.status_code == 200
+        catalog = catalog_response.json()
+        principal_id = overview.get("default_principal_id") or catalog["principals"][0]["id"]
+        resource_id = overview.get("default_resource_id") or catalog["resources"][0]["id"]
+        scenario_edge_id = overview.get("default_scenario_edge_id") or catalog["scenarios"][0]["edge_id"]
 
     assert principal_id
     assert resource_id
