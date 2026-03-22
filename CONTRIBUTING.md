@@ -4,8 +4,8 @@ Thanks for helping improve GrantPath.
 
 ## Before You Start
 
-- read [README.md](C:/test/EIP/README.md)
-- check [docs/support-matrix.md](C:/test/EIP/docs/support-matrix.md)
+- read [README.md](./README.md)
+- check [docs/support-matrix.md](./docs/support-matrix.md)
 - keep the product positioning honest: explainable access intelligence, not fake enterprise coverage
 
 ## Local Setup
@@ -13,7 +13,7 @@ Thanks for helping improve GrantPath.
 ### Backend
 
 ```powershell
-cd C:\test\EIP
+cd <repo-root>
 py -3.13 -m venv .venv
 .\.venv\Scripts\python.exe -m pip install -r .\backend\requirements-dev.txt
 ```
@@ -21,7 +21,7 @@ py -3.13 -m venv .venv
 ### Frontend
 
 ```powershell
-cd C:\test\EIP\frontend
+cd <repo-root>\frontend
 npm ci
 ```
 
@@ -30,7 +30,7 @@ npm ci
 Run these before opening a pull request:
 
 ```powershell
-cd C:\test\EIP
+cd <repo-root>
 .\.venv\Scripts\python.exe -m pytest backend/tests
 .\.venv\Scripts\python.exe -m bandit -r backend/app -ll
 .\.venv\Scripts\python.exe -m pip_audit -r backend/requirements.txt

@@ -95,19 +95,31 @@ Important compatibility note:
 
 - internal configuration prefixes still use `EIP_*` for backward compatibility
 
-## Quick Start
+## Install
+
+Start here:
+
+- [INSTALL.md](./INSTALL.md)
+
+Recommended install paths for end users:
+
+1. Docker appliance
+2. Windows release package
+3. Linux system install
+
+## Quick Start From Source
 
 ### Backend
 
 ```powershell
-cd C:\test\EIP
+cd <repo-root>
 .\.venv\Scripts\python.exe -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload --app-dir .\backend
 ```
 
 ### Frontend
 
 ```powershell
-cd C:\test\EIP\frontend
+cd <repo-root>\frontend
 npm run dev
 ```
 
@@ -118,7 +130,7 @@ UI:
 ### Local Quality Checks
 
 ```powershell
-cd C:\test\EIP
+cd <repo-root>
 .\.venv\Scripts\python.exe -m pip install -r .\backend\requirements-dev.txt
 .\.venv\Scripts\python.exe -m pytest backend/tests
 .\.venv\Scripts\python.exe -m bandit -r backend/app -ll
@@ -139,29 +151,32 @@ Supported packaging paths:
 
 Key files:
 
-- [backend/Dockerfile](C:/test/EIP/backend/Dockerfile)
-- [backend/requirements-dev.txt](C:/test/EIP/backend/requirements-dev.txt)
-- [frontend/Dockerfile](C:/test/EIP/frontend/Dockerfile)
-- [Dockerfile.appliance](C:/test/EIP/Dockerfile.appliance)
-- [docker-compose.production.yml](C:/test/EIP/docker-compose.production.yml)
-- [docker-compose.enterprise.yml](C:/test/EIP/docker-compose.enterprise.yml)
-- [scripts/build-windows.ps1](C:/test/EIP/scripts/build-windows.ps1)
-- [scripts/install-linux.sh](C:/test/EIP/scripts/install-linux.sh)
+- [backend/Dockerfile](./backend/Dockerfile)
+- [backend/requirements-dev.txt](./backend/requirements-dev.txt)
+- [frontend/Dockerfile](./frontend/Dockerfile)
+- [Dockerfile.appliance](./Dockerfile.appliance)
+- [docker-compose.production.yml](./docker-compose.production.yml)
+- [docker-compose.enterprise.yml](./docker-compose.enterprise.yml)
+- [scripts/build-windows.ps1](./scripts/build-windows.ps1)
+- [scripts/install-linux.sh](./scripts/install-linux.sh)
+- [scripts/install-from-source.ps1](./scripts/install-from-source.ps1)
+- [scripts/install-from-source.sh](./scripts/install-from-source.sh)
 
 ## Documentation
 
-- [Support Matrix](C:/test/EIP/docs/support-matrix.md)
-- [Roadmap](C:/test/EIP/ROADMAP.md)
-- [Official Integration Notes](C:/test/EIP/docs/official-integration-notes.md)
-- [Enterprise Readiness Review](C:/test/EIP/docs/enterprise-readiness-review.md)
+- [Install Guide](./INSTALL.md)
+- [Support Matrix](./docs/support-matrix.md)
+- [Roadmap](./ROADMAP.md)
+- [Official Integration Notes](./docs/official-integration-notes.md)
+- [Enterprise Readiness Review](./docs/enterprise-readiness-review.md)
 
 ## Repository Layout
 
-- [backend](C:/test/EIP/backend)
-- [frontend](C:/test/EIP/frontend)
-- [docs](C:/test/EIP/docs)
-- [deploy](C:/test/EIP/deploy)
-- [scripts](C:/test/EIP/scripts)
+- [backend](./backend)
+- [frontend](./frontend)
+- [docs](./docs)
+- [deploy](./deploy)
+- [scripts](./scripts)
 
 ## Supported vs Partial
 
@@ -171,7 +186,7 @@ At a high level:
 - `partial`: enterprise connector runtime coverage, analytics depth, tenant isolation
 - `blueprint`: some cloud connectors modeled from official documentation but not fully live in this runtime
 
-See the full matrix in [docs/support-matrix.md](C:/test/EIP/docs/support-matrix.md).
+See the full matrix in [docs/support-matrix.md](./docs/support-matrix.md).
 
 ## Publishing Notes
 
@@ -188,18 +203,18 @@ Recommended positioning:
 
 Public launch assets:
 
-- [GitHub Launch Kit](C:/test/EIP/docs/github-launch-kit.md)
-- [Release v0.1.0 Notes](C:/test/EIP/RELEASE_v0.1.0.md)
-- [License Decision](C:/test/EIP/docs/license-decision.md)
+- [GitHub Launch Kit](./docs/github-launch-kit.md)
+- [Release v0.1.0 Notes](./RELEASE_v0.1.0.md)
+- [License Decision](./docs/license-decision.md)
 
 ## Security
 
-Please read [SECURITY.md](C:/test/EIP/SECURITY.md) before reporting vulnerabilities.
+Please read [SECURITY.md](./SECURITY.md) before reporting vulnerabilities.
 
 ## Contributing
 
-Contribution guidelines are in [CONTRIBUTING.md](C:/test/EIP/CONTRIBUTING.md).
+Contribution guidelines are in [CONTRIBUTING.md](./CONTRIBUTING.md).
 
 ## License
 
-This repository is prepared for publication under the [Apache-2.0 License](C:/test/EIP/LICENSE).
+This repository is prepared for publication under the [Apache-2.0 License](./LICENSE).

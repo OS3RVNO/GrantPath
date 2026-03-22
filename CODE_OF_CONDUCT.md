@@ -33,7 +33,7 @@ This code of conduct applies within project spaces and in public spaces when som
 
 ## Enforcement
 
-If you experience or witness unacceptable behavior, report it through the contact path in [SECURITY.md](C:/test/EIP/SECURITY.md) or through the maintainers listed on the repository.
+If you experience or witness unacceptable behavior, report it through the contact path in [SECURITY.md](./SECURITY.md) or through the maintainers listed on the repository.
 
 ## Attribution
 
