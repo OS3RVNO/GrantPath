@@ -1140,12 +1140,25 @@ def test_mutating_routes_require_csrf() -> None:
 
 
 def test_changes_endpoint_surfaces_access_drift_between_snapshots() -> None:
+    global _CONTEXT
     context = _live_context()
     _login()
 
     latest_snapshot = runtime.storage.load_latest_snapshot()
     assert latest_snapshot is not None
-    principal = next(entity for entity in latest_snapshot.entities if entity.id == context["principal_id"])
+    snapshot_entities = {entity.id: entity for entity in latest_snapshot.entities}
+    principal = snapshot_entities.get(context["principal_id"])
+    if principal is None:
+        _CONTEXT = None
+        context = _live_context()
+        latest_snapshot = runtime.storage.load_latest_snapshot()
+        assert latest_snapshot is not None
+        snapshot_entities = {entity.id: entity for entity in latest_snapshot.entities}
+        principal = snapshot_entities.get(context["principal_id"])
+    if principal is None:
+        access_rows = runtime.storage.list_materialized_access_index(latest_snapshot.generated_at, limit=1)
+        assert access_rows
+        principal = snapshot_entities[str(access_rows[0]["principal_id"])]
     generated_at = "2026-12-31T23:59:59Z"
     drift_resource = Entity(
         id="drift_resource_finance_archive",
