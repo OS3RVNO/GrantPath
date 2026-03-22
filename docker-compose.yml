@@ -1,0 +1,69 @@
+services:
+  postgres:
+    image: postgres:18.3-alpine
+    container_name: eip-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: eip
+      POSTGRES_USER: eip
+      POSTGRES_PASSWORD: eip
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  neo4j:
+    image: neo4j:2026.02.2
+    container_name: eip-neo4j
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: neo4j/eip-demo-password
+    ports:
+      - "7474:7474"
+      - "7687:7687"
+    volumes:
+      - neo4j_data:/data
+
+  clickhouse:
+    image: clickhouse/clickhouse-server:25.11
+    container_name: eip-clickhouse
+    restart: unless-stopped
+    ports:
+      - "8123:8123"
+      - "9000:9000"
+    volumes:
+      - clickhouse_data:/var/lib/clickhouse
+
+  opensearch:
+    image: opensearchproject/opensearch:3.5.0
+    container_name: eip-opensearch
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: "true"
+      OPENSEARCH_JAVA_OPTS: "-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "9200:9200"
+      - "9600:9600"
+    volumes:
+      - opensearch_data:/usr/share/opensearch/data
+
+  valkey:
+    image: valkey/valkey:8.1.6-alpine
+    container_name: eip-valkey
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - valkey_data:/data
+
+volumes:
+  postgres_data:
+  neo4j_data:
+  clickhouse_data:
+  opensearch_data:
+  valkey_data:

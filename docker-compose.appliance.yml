@@ -1,0 +1,29 @@
+services:
+  eip:
+    build:
+      context: .
+      dockerfile: Dockerfile.appliance
+      args:
+        VITE_API_BASE_URL: ""
+    container_name: eip-appliance
+    restart: unless-stopped
+    environment:
+      EIP_ENV: production
+      EIP_DATA_DIR: /app/data
+      EIP_ALLOWED_ORIGINS: ${EIP_ALLOWED_ORIGINS:-http://localhost:8000,http://127.0.0.1:8000}
+      EIP_TRUSTED_HOSTS: ${EIP_TRUSTED_HOSTS:-localhost,127.0.0.1}
+      EIP_SECURE_COOKIES: ${EIP_SECURE_COOKIES:-0}
+      EIP_EXPOSE_BOOTSTRAP_DETAILS: ${EIP_EXPOSE_BOOTSTRAP_DETAILS:-0}
+      EIP_ENABLE_SCHEDULER: ${EIP_ENABLE_SCHEDULER:-1}
+      EIP_SCAN_INTERVAL_SECONDS: ${EIP_SCAN_INTERVAL_SECONDS:-900}
+      EIP_ENABLE_MATERIALIZED_ACCESS_INDEX: ${EIP_ENABLE_MATERIALIZED_ACCESS_INDEX:-1}
+      EIP_DATABASE_URL: ${EIP_DATABASE_URL:-}
+      EIP_APP_SECRET_KEY: ${EIP_APP_SECRET_KEY:-change-me-in-production}
+    volumes:
+      - eip_appliance_data:/app/data
+      - ${EIP_SCAN_ROOT:-./backend/data}:/scan-root:ro
+    ports:
+      - "8000:8000"
+
+volumes:
+  eip_appliance_data:

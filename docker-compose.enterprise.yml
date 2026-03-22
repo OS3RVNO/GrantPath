@@ -1,0 +1,84 @@
+services:
+  backend:
+    environment:
+      EIP_OPENSEARCH_URL: ${EIP_OPENSEARCH_URL:-http://opensearch:9200}
+      EIP_OPENSEARCH_INDEX: ${EIP_OPENSEARCH_INDEX:-eip-entities}
+      EIP_OPENSEARCH_VERIFY_TLS: ${EIP_OPENSEARCH_VERIFY_TLS:-0}
+      EIP_CLICKHOUSE_URL: ${EIP_CLICKHOUSE_URL:-http://clickhouse:8123}
+      EIP_CLICKHOUSE_DATABASE: ${EIP_CLICKHOUSE_DATABASE:-eip}
+      EIP_CLICKHOUSE_VERIFY_TLS: ${EIP_CLICKHOUSE_VERIFY_TLS:-0}
+      EIP_VALKEY_URL: ${EIP_VALKEY_URL:-redis://valkey:6379/0}
+      EIP_NEO4J_URI: ${EIP_NEO4J_URI:-bolt://neo4j:7687}
+
+  worker:
+    environment:
+      EIP_OPENSEARCH_URL: ${EIP_OPENSEARCH_URL:-http://opensearch:9200}
+      EIP_OPENSEARCH_INDEX: ${EIP_OPENSEARCH_INDEX:-eip-entities}
+      EIP_OPENSEARCH_VERIFY_TLS: ${EIP_OPENSEARCH_VERIFY_TLS:-0}
+      EIP_CLICKHOUSE_URL: ${EIP_CLICKHOUSE_URL:-http://clickhouse:8123}
+      EIP_CLICKHOUSE_DATABASE: ${EIP_CLICKHOUSE_DATABASE:-eip}
+      EIP_CLICKHOUSE_VERIFY_TLS: ${EIP_CLICKHOUSE_VERIFY_TLS:-0}
+      EIP_VALKEY_URL: ${EIP_VALKEY_URL:-redis://valkey:6379/0}
+      EIP_NEO4J_URI: ${EIP_NEO4J_URI:-bolt://neo4j:7687}
+
+  opensearch:
+    profiles: ["enterprise-search"]
+    image: opensearchproject/opensearch:${EIP_OPENSEARCH_VERSION:-3.5.0}
+    container_name: eip-opensearch
+    restart: unless-stopped
+    environment:
+      discovery.type: single-node
+      plugins.security.disabled: "true"
+      OPENSEARCH_JAVA_OPTS: ${EIP_OPENSEARCH_JAVA_OPTS:--Xms512m -Xmx512m}
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    ports:
+      - "${EIP_OPENSEARCH_PORT:-9200}:9200"
+      - "${EIP_OPENSEARCH_METRICS_PORT:-9600}:9600"
+    volumes:
+      - eip_opensearch_data:/usr/share/opensearch/data
+
+  clickhouse:
+    profiles: ["enterprise-analytics"]
+    image: clickhouse/clickhouse-server:${EIP_CLICKHOUSE_VERSION:-25.11}
+    container_name: eip-clickhouse
+    restart: unless-stopped
+    ports:
+      - "${EIP_CLICKHOUSE_HTTP_PORT:-8123}:8123"
+      - "${EIP_CLICKHOUSE_NATIVE_PORT:-9000}:9000"
+    volumes:
+      - eip_clickhouse_data:/var/lib/clickhouse
+
+  valkey:
+    profiles: ["enterprise-cache"]
+    image: valkey/valkey:${EIP_VALKEY_VERSION:-8.1.6-alpine}
+    container_name: eip-valkey
+    restart: unless-stopped
+    command: ["valkey-server", "--appendonly", "yes"]
+    ports:
+      - "${EIP_VALKEY_PORT:-6379}:6379"
+    volumes:
+      - eip_valkey_data:/data
+
+  neo4j:
+    profiles: ["enterprise-graph"]
+    image: neo4j:${EIP_NEO4J_VERSION:-2026.02.2}
+    container_name: eip-neo4j
+    restart: unless-stopped
+    environment:
+      NEO4J_AUTH: ${EIP_NEO4J_AUTH:-neo4j/eip-change-me}
+      NEO4J_server_memory_heap_initial__size: ${EIP_NEO4J_HEAP_INITIAL:-512m}
+      NEO4J_server_memory_heap_max__size: ${EIP_NEO4J_HEAP_MAX:-512m}
+    ports:
+      - "${EIP_NEO4J_HTTP_PORT:-7474}:7474"
+      - "${EIP_NEO4J_BOLT_PORT:-7687}:7687"
+    volumes:
+      - eip_neo4j_data:/data
+
+volumes:
+  eip_opensearch_data:
+  eip_clickhouse_data:
+  eip_valkey_data:
+  eip_neo4j_data:

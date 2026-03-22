@@ -1,0 +1,169 @@
+services:
+  postgres:
+    image: postgres:18.3-alpine
+    container_name: eip-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-eip}
+      POSTGRES_USER: ${POSTGRES_USER:-eip}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-eip} -d ${POSTGRES_DB:-eip}"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+    volumes:
+      - eip_postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: eip-backend
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      EIP_ENV: production
+      EIP_RUNTIME_ROLE: ${EIP_BACKEND_RUNTIME_ROLE:-all}
+      EIP_DATABASE_URL: postgresql://${POSTGRES_USER:-eip}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-eip}
+      EIP_DATA_DIR: /app/data
+      EIP_ADMIN_USERNAME: ${EIP_ADMIN_USERNAME:-admin}
+      EIP_APP_SECRET_KEY: ${EIP_APP_SECRET_KEY:?set EIP_APP_SECRET_KEY in .env}
+      EIP_ALLOWED_ORIGINS: ${EIP_ALLOWED_ORIGINS:?set EIP_ALLOWED_ORIGINS in .env}
+      EIP_TRUSTED_HOSTS: ${EIP_TRUSTED_HOSTS:?set EIP_TRUSTED_HOSTS in .env}
+      EIP_SECURE_COOKIES: ${EIP_SECURE_COOKIES:-1}
+      EIP_EXPOSE_BOOTSTRAP_DETAILS: ${EIP_EXPOSE_BOOTSTRAP_DETAILS:-0}
+      EIP_ENFORCE_CSRF: ${EIP_ENFORCE_CSRF:-1}
+      EIP_TARGET_SCAN_WORKERS: ${EIP_TARGET_SCAN_WORKERS:-4}
+      EIP_ENABLE_SCHEDULER: ${EIP_ENABLE_SCHEDULER:-1}
+      EIP_SCAN_INTERVAL_SECONDS: ${EIP_SCAN_INTERVAL_SECONDS:-900}
+      EIP_BACKGROUND_HEARTBEAT_INTERVAL_SECONDS: ${EIP_BACKGROUND_HEARTBEAT_INTERVAL_SECONDS:-30}
+      EIP_SNAPSHOT_RETENTION: ${EIP_SNAPSHOT_RETENTION:-25}
+      EIP_ENABLE_MATERIALIZED_ACCESS_INDEX: ${EIP_ENABLE_MATERIALIZED_ACCESS_INDEX:-1}
+      EIP_DEFAULT_SCAN_ROOT: /scan-root
+      EIP_SSH_KNOWN_HOSTS: ${EIP_SSH_KNOWN_HOSTS:-}
+      EIP_ALLOW_INSECURE_SSH_HOST_KEYS: 0
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      EIP_OPENSEARCH_URL: ${EIP_OPENSEARCH_URL:-}
+      EIP_OPENSEARCH_INDEX: ${EIP_OPENSEARCH_INDEX:-eip-entities}
+      EIP_OPENSEARCH_USERNAME: ${EIP_OPENSEARCH_USERNAME:-}
+      EIP_OPENSEARCH_PASSWORD: ${EIP_OPENSEARCH_PASSWORD:-}
+      EIP_OPENSEARCH_VERIFY_TLS: ${EIP_OPENSEARCH_VERIFY_TLS:-0}
+      EIP_CLICKHOUSE_URL: ${EIP_CLICKHOUSE_URL:-}
+      EIP_CLICKHOUSE_DATABASE: ${EIP_CLICKHOUSE_DATABASE:-eip}
+      EIP_CLICKHOUSE_USERNAME: ${EIP_CLICKHOUSE_USERNAME:-}
+      EIP_CLICKHOUSE_PASSWORD: ${EIP_CLICKHOUSE_PASSWORD:-}
+      EIP_CLICKHOUSE_VERIFY_TLS: ${EIP_CLICKHOUSE_VERIFY_TLS:-0}
+      EIP_VALKEY_URL: ${EIP_VALKEY_URL:-}
+      EIP_NEO4J_URI: ${EIP_NEO4J_URI:-}
+      EIP_KAFKA_BOOTSTRAP_SERVERS: ${EIP_KAFKA_BOOTSTRAP_SERVERS:-}
+      EIP_TEMPORAL_ADDRESS: ${EIP_TEMPORAL_ADDRESS:-}
+      EIP_LANGFUSE_BASE_URL: ${EIP_LANGFUSE_BASE_URL:-}
+    volumes:
+      - eip_backend_data:/app/data
+      - ${EIP_SCAN_ROOT:?set EIP_SCAN_ROOT to the host directory you want to monitor}:/scan-root:ro
+    expose:
+      - "8000"
+
+  worker:
+    profiles: ["worker-runner"]
+    build:
+      context: ./backend
+    container_name: eip-worker
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    command: ["python", "-m", "app.worker_main"]
+    environment:
+      EIP_ENV: production
+      EIP_RUNTIME_ROLE: worker
+      EIP_DATABASE_URL: postgresql://${POSTGRES_USER:-eip}:${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}@postgres:5432/${POSTGRES_DB:-eip}
+      EIP_DATA_DIR: /app/data
+      EIP_ADMIN_USERNAME: ${EIP_ADMIN_USERNAME:-admin}
+      EIP_APP_SECRET_KEY: ${EIP_APP_SECRET_KEY:?set EIP_APP_SECRET_KEY in .env}
+      EIP_ALLOWED_ORIGINS: ${EIP_ALLOWED_ORIGINS:?set EIP_ALLOWED_ORIGINS in .env}
+      EIP_TRUSTED_HOSTS: ${EIP_TRUSTED_HOSTS:?set EIP_TRUSTED_HOSTS in .env}
+      EIP_SECURE_COOKIES: ${EIP_SECURE_COOKIES:-1}
+      EIP_EXPOSE_BOOTSTRAP_DETAILS: ${EIP_EXPOSE_BOOTSTRAP_DETAILS:-0}
+      EIP_ENFORCE_CSRF: ${EIP_ENFORCE_CSRF:-1}
+      EIP_TARGET_SCAN_WORKERS: ${EIP_TARGET_SCAN_WORKERS:-4}
+      EIP_ENABLE_SCHEDULER: ${EIP_ENABLE_SCHEDULER:-1}
+      EIP_SCAN_INTERVAL_SECONDS: ${EIP_SCAN_INTERVAL_SECONDS:-900}
+      EIP_ENABLE_REPORT_SCHEDULER: ${EIP_ENABLE_REPORT_SCHEDULER:-1}
+      EIP_REPORT_SCHEDULER_INTERVAL_SECONDS: ${EIP_REPORT_SCHEDULER_INTERVAL_SECONDS:-60}
+      EIP_BACKGROUND_HEARTBEAT_INTERVAL_SECONDS: ${EIP_BACKGROUND_HEARTBEAT_INTERVAL_SECONDS:-30}
+      EIP_SNAPSHOT_RETENTION: ${EIP_SNAPSHOT_RETENTION:-25}
+      EIP_ENABLE_MATERIALIZED_ACCESS_INDEX: ${EIP_ENABLE_MATERIALIZED_ACCESS_INDEX:-1}
+      EIP_DEFAULT_SCAN_ROOT: /scan-root
+      EIP_SSH_KNOWN_HOSTS: ${EIP_SSH_KNOWN_HOSTS:-}
+      EIP_ALLOW_INSECURE_SSH_HOST_KEYS: 0
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_EXPORTER_OTLP_ENDPOINT:-}
+      EIP_OPENSEARCH_URL: ${EIP_OPENSEARCH_URL:-}
+      EIP_OPENSEARCH_INDEX: ${EIP_OPENSEARCH_INDEX:-eip-entities}
+      EIP_OPENSEARCH_USERNAME: ${EIP_OPENSEARCH_USERNAME:-}
+      EIP_OPENSEARCH_PASSWORD: ${EIP_OPENSEARCH_PASSWORD:-}
+      EIP_OPENSEARCH_VERIFY_TLS: ${EIP_OPENSEARCH_VERIFY_TLS:-0}
+      EIP_CLICKHOUSE_URL: ${EIP_CLICKHOUSE_URL:-}
+      EIP_CLICKHOUSE_DATABASE: ${EIP_CLICKHOUSE_DATABASE:-eip}
+      EIP_CLICKHOUSE_USERNAME: ${EIP_CLICKHOUSE_USERNAME:-}
+      EIP_CLICKHOUSE_PASSWORD: ${EIP_CLICKHOUSE_PASSWORD:-}
+      EIP_CLICKHOUSE_VERIFY_TLS: ${EIP_CLICKHOUSE_VERIFY_TLS:-0}
+      EIP_VALKEY_URL: ${EIP_VALKEY_URL:-}
+      EIP_NEO4J_URI: ${EIP_NEO4J_URI:-}
+      EIP_KAFKA_BOOTSTRAP_SERVERS: ${EIP_KAFKA_BOOTSTRAP_SERVERS:-}
+      EIP_TEMPORAL_ADDRESS: ${EIP_TEMPORAL_ADDRESS:-}
+      EIP_LANGFUSE_BASE_URL: ${EIP_LANGFUSE_BASE_URL:-}
+    volumes:
+      - eip_backend_data:/app/data
+      - ${EIP_SCAN_ROOT:?set EIP_SCAN_ROOT to the host directory you want to monitor}:/scan-root:ro
+
+  keycloak:
+    profiles: ["sso"]
+    build:
+      context: ./identity/keycloak
+    container_name: eip-keycloak
+    restart: unless-stopped
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_PORT: 5432
+      KC_DB_URL_DATABASE: ${POSTGRES_DB:-eip}
+      KC_DB_SCHEMA: ${KEYCLOAK_DB_SCHEMA:-public}
+      KC_DB_USERNAME: ${POSTGRES_USER:-eip}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:?set POSTGRES_PASSWORD in .env}
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KEYCLOAK_BOOTSTRAP_ADMIN_USERNAME:-kcadmin}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KEYCLOAK_BOOTSTRAP_ADMIN_PASSWORD:-replace-before-enabling-sso}
+      KC_HTTP_ENABLED: "true"
+      KC_PROXY_HEADERS: xforwarded
+      KC_HOSTNAME_STRICT: "false"
+      KC_HEALTH_ENABLED: "true"
+      KC_METRICS_ENABLED: "true"
+    ports:
+      - "${KEYCLOAK_PORT:-8080}:8080"
+    healthcheck:
+      test: ["CMD-SHELL", "exec 3<>/dev/tcp/127.0.0.1/9000 && printf 'GET /health/ready HTTP/1.1\\r\\nHost: localhost\\r\\nConnection: close\\r\\n\\r\\n' >&3 && grep -q '200' <&3"]
+      interval: 30s
+      timeout: 5s
+      retries: 10
+      start_period: 40s
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        VITE_API_BASE_URL: /api
+    container_name: eip-frontend
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+
+volumes:
+  eip_backend_data:
+  eip_postgres_data:

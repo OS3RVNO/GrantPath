@@ -1,0 +1,48 @@
+{
+  "name": "Offline Graph Export",
+  "source": "JSON import",
+  "environment": "cloud",
+  "description": "Example bundle imported without live credentials.",
+  "entities": [
+    {
+      "id": "alice_cloud",
+      "name": "alice.wong@contoso.com",
+      "kind": "user",
+      "source": "Microsoft Graph",
+      "environment": "cloud",
+      "description": "Cloud identity for Alice Wong.",
+      "criticality": 2,
+      "risk_score": 34,
+      "tags": ["graph", "entra", "user"]
+    },
+    {
+      "id": "payroll_site",
+      "name": "Payroll Cloud Folder",
+      "kind": "resource",
+      "source": "SharePoint Online",
+      "environment": "cloud",
+      "description": "Imported resource from an offline export.",
+      "criticality": 3,
+      "risk_score": 48,
+      "tags": ["graph", "sharepoint", "resource"]
+    }
+  ],
+  "relationships": [
+    {
+      "id": "alice_payroll_read",
+      "kind": "direct_acl",
+      "source": "alice_cloud",
+      "target": "payroll_site",
+      "label": "Read on Payroll Cloud Folder",
+      "rationale": "Imported permission from an offline entitlement export.",
+      "permissions": ["Read"],
+      "inherits": false,
+      "temporary": false,
+      "expires_at": null,
+      "removable": true,
+      "metadata": {}
+    }
+  ],
+  "connectors": [],
+  "insights": []
+}

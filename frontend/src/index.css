@@ -1,0 +1,52 @@
+:root {
+  font-family: 'IBM Plex Sans', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #11201f;
+  background:
+    radial-gradient(circle at top left, rgba(11, 97, 90, 0.18), transparent 32%),
+    radial-gradient(circle at top right, rgba(200, 92, 53, 0.16), transparent 28%),
+    linear-gradient(180deg, #fffaf4 0%, #f4efe6 48%, #eff4ef 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --ink-strong: #11201f;
+  --ink-muted: #536966;
+  --panel: rgba(255, 250, 244, 0.82);
+  --panel-border: rgba(17, 32, 31, 0.1);
+  --shadow:
+    0 24px 60px rgba(17, 32, 31, 0.12),
+    inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  --teal: #0b615a;
+  --teal-soft: #dceee9;
+  --copper: #c85c35;
+  --copper-soft: #f5dcc6;
+  --blue-soft: #dde8fb;
+  --amber-soft: #f2e5ae;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
