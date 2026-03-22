@@ -14,21 +14,21 @@ Who has access. Why it exists. What changes if you remove it.
 
 ## Short Description
 
-GrantPath is a self-hosted Access Path Intelligence Platform for investigating effective access, understanding why it exists and simulating what changes when grants or paths are removed.
+GrantPath is an early-stage, self-hosted access intelligence platform for IAM, Active Directory, file servers and ACLs. It explains permissions, supports access reviews and simulates removals.
 
 ## GitHub Repository Description
 
-Self-hosted access path intelligence for operators, security teams and IAM programs.
+Early-stage, self-hosted access intelligence for IAM, Active Directory, file servers and ACLs. Explain permissions, review access and simulate removals.
 
 ## About Panel Copy
 
 ### Description
 
-Self-hosted access path intelligence for operators, security teams and IAM programs.
+Early-stage, self-hosted access intelligence for IAM, Active Directory, file servers and ACLs. Explain permissions, review access and simulate removals.
 
 ### Short About
 
-GrantPath explains who has access, why it exists and what changes when you remove a grant, group or ACL path.
+GrantPath is under active implementation and already shows who has access, why it exists and what changes when you remove a grant, group or ACL path across IAM, Active Directory and file server permissions.
 
 ### Suggested Website
 
@@ -36,7 +36,7 @@ Leave empty until there is a stable docs or product site.
 
 ## One-Sentence Pitch
 
-GrantPath turns identities, groups, ACLs and inheritance into fast, explainable answers for operators, security teams and IAM programs.
+GrantPath turns IAM identities, Active Directory groups, ACLs and inheritance into fast, explainable answers for access reviews, permission cleanup and operational investigations.
 
 ## Recommended Topics
 
@@ -55,11 +55,11 @@ GrantPath turns identities, groups, ACLs and inheritance into fast, explainable 
 
 ## Suggested First Release Title
 
-`GrantPath v0.1.0 - First public beta`
+`GrantPath v0.1.0 - Early public preview`
 
 ## Suggested Release Summary
 
-GrantPath v0.1.0 is the first public beta of a self-hosted access path intelligence platform focused on explainability, access review and operational reporting.
+GrantPath v0.1.0 is an early public preview of a self-hosted access intelligence platform for IAM, Active Directory, file servers and ACLs, with working explainability, access reviews and operational reporting.
 
 ## Suggested Social Preview Copy
 

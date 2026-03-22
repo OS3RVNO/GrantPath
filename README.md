@@ -2,11 +2,11 @@
 
 > Who has access. Why it exists. What changes if you remove it.
 
-GrantPath is self-hosted access path intelligence for operators, security teams and IAM programs.
+GrantPath is an early-stage, self-hosted access intelligence project for IAM, Active Directory, file servers and ACLs. It already explains permissions, supports access reviews and shows what changes before you remove a grant.
 
 ## About
 
-GrantPath is an explainable control plane for access and entitlement analysis.
+GrantPath is an explainable control plane for access analysis, entitlement visibility and permission cleanup.
 
 - it shows who has access to a resource
 - it explains why that access exists across identities, groups, ACLs and inheritance
@@ -34,16 +34,11 @@ Core product goals:
 - operator-grade reporting and access reviews
 - self-hosted deployment without paid dependencies
 
-## Current Maturity
+## Project Status
 
-GrantPath is currently best described as:
+GrantPath is still under active implementation and should be treated as an early-stage platform, not as a finished enterprise suite.
 
-- `advanced MVP / private beta`
-- strong for `filesystem + explainability + reporting + review`
-- partially implemented for several enterprise connector surfaces
-- architected for a larger enterprise stack, with some components already integrated and others still optional
-
-What is already solid:
+What already feels solid:
 
 - local admin bootstrap with MFA
 - `LDAP` and `OIDC` integration paths
@@ -180,7 +175,6 @@ Key files:
 
 - [Install Guide](./INSTALL.md)
 - [Support Matrix](./docs/support-matrix.md)
-- [Roadmap](./ROADMAP.md)
 - [Official Integration Notes](./docs/official-integration-notes.md)
 - [Enterprise Readiness Review](./docs/enterprise-readiness-review.md)
 
@@ -212,7 +206,7 @@ GrantPath is publishable as an open-source project today if positioned honestly:
 Recommended positioning:
 
 - `Access Path Intelligence Platform`
-- `advanced MVP / private beta`
+- `early-stage and under active implementation`
 - `self-hosted, explainable, operator-first`
 
 Public launch assets:
