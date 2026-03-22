@@ -20,6 +20,20 @@ GrantPath is a self-hosted Access Path Intelligence Platform for investigating e
 
 Self-hosted access path intelligence for operators, security teams and IAM programs.
 
+## About Panel Copy
+
+### Description
+
+Self-hosted access path intelligence for operators, security teams and IAM programs.
+
+### Short About
+
+GrantPath explains who has access, why it exists and what changes when you remove a grant, group or ACL path.
+
+### Suggested Website
+
+Leave empty until there is a stable docs or product site.
+
 ## One-Sentence Pitch
 
 GrantPath turns identities, groups, ACLs and inheritance into fast, explainable answers for operators, security teams and IAM programs.
@@ -27,10 +41,12 @@ GrantPath turns identities, groups, ACLs and inheritance into fast, explainable 
 ## Recommended Topics
 
 - access-intelligence
+- entitlement-intelligence
 - entitlement-management
 - access-review
 - iam
 - graph
+- explainability
 - self-hosted
 - fastapi
 - react
