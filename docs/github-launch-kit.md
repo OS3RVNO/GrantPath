@@ -10,11 +10,15 @@
 
 ## Tagline
 
-Explainable access path intelligence for self-hosted infrastructure.
+Who has access. Why it exists. What changes if you remove it.
 
 ## Short Description
 
 GrantPath is a self-hosted Access Path Intelligence Platform for investigating effective access, understanding why it exists and simulating what changes when grants or paths are removed.
+
+## GitHub Repository Description
+
+Self-hosted access path intelligence for operators, security teams and IAM programs.
 
 ## One-Sentence Pitch
 

@@ -1,5 +1,9 @@
 # GrantPath
 
+> Who has access. Why it exists. What changes if you remove it.
+
+GrantPath is self-hosted access path intelligence for operators, security teams and IAM programs.
+
 GrantPath is a self-hosted **Access Path Intelligence Platform** for teams that need to answer:
 
 - who has access

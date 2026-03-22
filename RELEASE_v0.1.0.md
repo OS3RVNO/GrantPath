@@ -1,5 +1,7 @@
 # GrantPath v0.1.0
 
+Who has access. Why it exists. What changes if you remove it.
+
 First public release of GrantPath, a self-hosted Access Path Intelligence Platform focused on explainable access reasoning and operator workflows.
 
 ## Highlights

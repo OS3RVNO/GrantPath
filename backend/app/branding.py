@@ -2,6 +2,10 @@ from __future__ import annotations
 
 PRODUCT_NAME = "GrantPath"
 PRODUCT_CATEGORY = "Access Path Intelligence Platform"
+PRODUCT_TAGLINE = "Who has access. Why it exists. What changes if you remove it."
+PRODUCT_SHORT_DESCRIPTION = (
+    "Self-hosted access path intelligence for operators, security teams and IAM programs."
+)
 PRODUCT_API_TITLE = f"{PRODUCT_NAME} API"
 PRODUCT_DEFAULT_TENANT_NAME = PRODUCT_NAME
 PRODUCT_DEFAULT_TENANT_PLACEHOLDER = "Contoso GrantPath Workspace"
