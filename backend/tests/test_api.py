@@ -1,4 +1,5 @@
 import os
+from datetime import UTC, datetime
 from pathlib import Path
 
 import pyotp
@@ -56,8 +57,18 @@ def _headers() -> dict[str, str]:
 
 
 def _seed_demo_runtime_snapshot() -> None:
-    snapshot = build_demo_snapshot()
+    snapshot = build_demo_snapshot().model_copy(
+        update={
+            "generated_at": datetime.now(tz=UTC).isoformat().replace("+00:00", "Z"),
+        }
+    )
     runtime.storage.save_snapshot(snapshot)
+    runtime.storage.save_raw_snapshot(
+        snapshot.generated_at,
+        "test-demo-seed",
+        {"source": "demo-fallback", "reason": "empty-live-catalog"},
+        captured_at=snapshot.generated_at,
+    )
     runtime.engine = AccessGraphEngine(snapshot)
     runtime._refresh_enterprise_indexes(snapshot)
 
