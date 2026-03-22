@@ -14,21 +14,21 @@ Who has access. Why it exists. What changes if you remove it.
 
 ## Short Description
 
-GrantPath is an early-stage, self-hosted access intelligence platform for IAM, Active Directory, file servers and ACLs. It explains permissions, supports access reviews and simulates removals.
+GrantPath is a graph-powered, self-hosted access intelligence platform for IAM, Active Directory, file servers and ACLs. It explains permissions, supports access reviews and simulates safe removals.
 
 ## GitHub Repository Description
 
-Early-stage, self-hosted access intelligence for IAM, Active Directory, file servers and ACLs. Explain permissions, review access and simulate removals.
+Graph-powered access intelligence for IAM, Active Directory and file server permissions. Explain access, review exposure and simulate changes before they break production.
 
 ## About Panel Copy
 
 ### Description
 
-Early-stage, self-hosted access intelligence for IAM, Active Directory, file servers and ACLs. Explain permissions, review access and simulate removals.
+Graph-powered access intelligence for IAM, Active Directory and file server permissions. Explain access, review exposure and simulate changes before they break production.
 
 ### Short About
 
-GrantPath is under active implementation and already shows who has access, why it exists and what changes when you remove a grant, group or ACL path across IAM, Active Directory and file server permissions.
+GrantPath turns identities, groups, ACLs and inheritance into fast, explainable answers for access reviews, permission cleanup and security investigations.
 
 ### Suggested Website
 
