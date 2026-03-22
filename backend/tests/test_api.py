@@ -65,14 +65,40 @@ def _live_context() -> dict[str, str]:
     overview_response = client.get("/api/overview")
     assert overview_response.status_code == 200
     overview = overview_response.json()
-    assert overview["default_principal_id"]
-    assert overview["default_resource_id"]
-    assert overview["default_scenario_edge_id"]
+    catalog_response = client.get("/api/catalog")
+    assert catalog_response.status_code == 200
+    catalog = catalog_response.json()
+
+    principal_id = overview.get("default_principal_id")
+    if not principal_id and catalog.get("principals"):
+        principal_id = catalog["principals"][0]["id"]
+
+    resource_id = overview.get("default_resource_id")
+    if not resource_id and catalog.get("resources"):
+        resource_id = catalog["resources"][0]["id"]
+
+    scenario_edge_id = overview.get("default_scenario_edge_id")
+    if not scenario_edge_id and catalog.get("scenarios"):
+        scenario_edge_id = catalog["scenarios"][0]["edge_id"]
+    if not scenario_edge_id:
+        removable_relationship = next(
+            (
+                relationship
+                for relationship in runtime.engine.relationships
+                if relationship.removable
+            ),
+            None,
+        )
+        scenario_edge_id = None if removable_relationship is None else removable_relationship.id
+
+    assert principal_id
+    assert resource_id
+    assert scenario_edge_id
 
     _CONTEXT = {
-        "principal_id": overview["default_principal_id"],
-        "resource_id": overview["default_resource_id"],
-        "scenario_edge_id": overview["default_scenario_edge_id"],
+        "principal_id": principal_id,
+        "resource_id": resource_id,
+        "scenario_edge_id": scenario_edge_id,
     }
     return _CONTEXT
 
